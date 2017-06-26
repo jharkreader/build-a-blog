@@ -28,7 +28,7 @@ def index():
     return render_template('blog.html', blogs=blogs)
 
 
-@app.route('/add', methods=['GET', 'POST'])
+@app.route('/newpost', methods=['GET', 'POST'])
 def add_blog():
     if request.method == 'POST':
         blog_title = request.form['blog_title']
@@ -52,14 +52,14 @@ def add_blog():
             return return_block
 
         else:
-            return render_template('add.html', 
+            return render_template('newpost.html', 
             title_error=title_error,
             text_error=text_error, 
             blog_text=blog_text, 
             blog_title=blog_title)    
 
     else:
-        return render_template('add.html')
+        return render_template('newpost.html')
 
 
 if __name__ == '__main__':
