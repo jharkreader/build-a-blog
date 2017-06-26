@@ -1,0 +1,48 @@
+<!DOCTYPE = html>
+
+<html>
+
+    <head>
+        <title>Build a Blog</title>
+        <style type="text/css">
+            html {
+                font-family: Helvetica, sans-serif;
+            }
+
+            label {
+                display: inline-block;
+                width: 140px;
+                text-align: right;
+            }
+
+            .submit {
+                margin-left: 200px;
+            }
+
+            .textarea {
+                height: 300px;
+                width: 300px;
+            }
+
+            .error {
+                color: red;
+            }
+        </style>          
+    </head>
+
+    <body>
+
+        <div>
+            <a href='/blog'>Main Blog Page</a>
+        </div>
+        <div>
+            <a href='/add'>Add a Blog Post</a>
+        </div> 
+   
+    
+        {% block content %}
+        {% endblock %}
+
+    </body>    
+
+</html>     
