@@ -20,7 +20,7 @@ class BlogPost(db.Model):
         self.blog_text = blog_text
 
 
-@app.route('/blog', methods=['GET'])
+@app.route('/blog', methods=['GET', 'POST'])
 def index():
 
     blogs = BlogPost.query.all()   
@@ -28,18 +28,38 @@ def index():
     return render_template('blog.html', blogs=blogs)
 
 
-@app.route('/add', methods=['POST','GET'])
+@app.route('/add', methods=['GET', 'POST'])
 def add_blog():
+    if request.method == 'POST':
+        blog_title = request.form['blog_title']
+        blog_text = request.form['blog_text']
 
-    post_title = request.form['blog_title']
-    post_text = request.form['blog_text']
-    new_blog = BlogPost(post_title, post_text)
-    db.session.add(new_blog)
-    db.session.commit()
+        title_error = ''
+        text_error = ''
 
-    return_block = "<h1>{0}</h1><p>{1}</p>".format(post_title,post_text)
+        if blog_title == "":
+            title_error = "Please enter a title."
+        if blog_text == "":
+            text_error = "Please enter blog text."    
+        
+        if not title_error and not text_error:
 
-    return return_block
+            new_blog = BlogPost(blog_title, blog_text)
+            db.session.add(new_blog)
+            db.session.commit()
+            return_block = "<h1>{0}</h1><p>{1}</p>".format(blog_title,blog_text)
+
+            return return_block
+
+        else:
+            return render_template('add.html', 
+            title_error=title_error,
+            text_error=text_error, 
+            blog_text=blog_text, 
+            blog_title=blog_title)    
+
+    else:
+        return render_template('add.html')
 
 
 if __name__ == '__main__':
