@@ -23,7 +23,12 @@ class BlogPost(db.Model):
 @app.route('/blog', methods=['GET', 'POST'])
 def index():
 
-    blogs = BlogPost.query.all()   
+    blogs = BlogPost.query.all()
+
+    if 'id' in request.args:
+        blog_id = request.args['id']
+        blog_post = BlogPost.query.get(blog_id)
+        return render_template('post.html', blog=blog_post)
 
     return render_template('blog.html', blogs=blogs)
 
@@ -50,10 +55,6 @@ def add_blog():
             new_blog = BlogPost.query.order_by('-id').first()
 
             return render_template('post.html', blog=new_blog)
-
-
-            #return_block = "<h1>{0}</h1><p>{1}</p>".format(blog_title,blog_text)
-            #return return_block
 
         else:
             return render_template('newpost.html', 
