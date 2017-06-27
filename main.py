@@ -47,9 +47,13 @@ def add_blog():
             new_blog = BlogPost(blog_title, blog_text)
             db.session.add(new_blog)
             db.session.commit()
-            return_block = "<h1>{0}</h1><p>{1}</p>".format(blog_title,blog_text)
+            new_blog = BlogPost.query.order_by('-id').first()
 
-            return return_block
+            return render_template('post.html', blog=new_blog)
+
+
+            #return_block = "<h1>{0}</h1><p>{1}</p>".format(blog_title,blog_text)
+            #return return_block
 
         else:
             return render_template('newpost.html', 
