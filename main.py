@@ -1,6 +1,7 @@
 from flask import Flask, request, redirect, render_template, session, flash
 from flask_sqlalchemy import SQLAlchemy
 
+
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://build-a-blog:insecure@localhost:8889/build-a-blog'
@@ -22,7 +23,6 @@ class BlogPost(db.Model):
 
 @app.route('/blog', methods=['GET', 'POST'])
 def index():
-
     blogs = BlogPost.query.all()
 
     if 'id' in request.args:
@@ -52,7 +52,6 @@ def add_blog():
             new_blog = BlogPost(blog_title, blog_text)
             db.session.add(new_blog)
             db.session.commit()
-            new_blog = BlogPost.query.order_by('-id').first()
             id_param = new_blog.id
 
             return redirect('/blog?id={0}'.format(id_param))
